@@ -1,0 +1,10 @@
+.aboutus-style{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.font-style{
+    font-size: 20px;
+    font-style: normal;
+    
+}

@@ -1,57 +1,26 @@
 import React from 'react';
 //import Sidebar from './Sidebar';
-import Main from './Main';
+import Main from '../Main';
+import './home.css';
 import imgbg from '../../images/ia_100000062.jpg';
-import { Row,Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import {addToDb,getStoredCart} from '../chefdb';
 import { useEffect, useState } from 'react';
 
 const Home = () => {
 
     const [courses, setCourses] = useState([]);
-        //const [cart, setCart] = useState([]);
         const [displayCourses, setDisplayCourse] = useState([]);
     
         useEffect(() => {
-            fetch('../../data.JSON')
+            fetch(`./data.json`)
                 .then(res => res.json())
-                .then(data =>
-                    {setCourses(data);
+                .then(data => {
+                    console.log(data);
+                    setCourses(data);
                     setDisplayCourse(data);
-                }
-            );
+                });
         }, []);
     
-        // useEffect(() => {
-        //     if (courses.length) {
-        //         const savedCart = getStoredCart();
-        //         const storedCart = [];
-        //         for (const key in savedCart) {
-        //             const addedPerson = courses.find(chef => course.key === key);
-        //             if (addedPerson) {
-        //                 const quantity = savedCart[key];
-        //                 addedPerson.quantity = quantity;
-        //                 storedCart.push(addedPerson);
-        //             }
-        //         }
-        //         setCart(storedCart);
-        //     }
-        // }, [courses])
-    
-        // const handleAddToCart = chef => {
-        //     const newCart = [...cart, chef];
-        //     setCart(newCart);
-        //     // save to local storage 
-        //     addToDb(chef.key);
-
-        // }
-    
-        // const handleSearch = event => {
-        //     const searchText = event.target.value;
-        //     const matchedCourse = courses.filter(cr => cr.name.toLowerCase().includes(searchText.toLowerCase()));
-        //     setDisplayCourse(matchedCourse);
-        // }
     
     return (
         <>
@@ -70,23 +39,25 @@ const Home = () => {
                 <button type='button' className="btn  mx-lg-5 btnsize">APPLY TODAY</button>
                 </div>
             </div>
-            <Row className="chef-container container text-center ">
-                    <Col sm={8}>
-                    <div className="chef_root">
+            <div className="container text-center ">
+                    <div className="search-container justify-content-center d-flex my-4">
+                        <input variant="outline-success" className="text-center"
+                        type="text"
+                        placeholder="Search Courses" />   
+                    </div>
+                    <div className="main_root">
                         {
-                            displayCourses.map(cr => <Main
+                            displayCourses.slice(0,4).map(cr => <Main
                                 key={cr.key}
                                 course={cr}
-                                //handleAddToCart={handleAddToCart}
                             >
                             </Main>)
                         }
                     </div>
-                    </Col>
-                    <Col sm={4}>
+                    <div >
                       {/* <Sidebar cart={cart}></Sidebar> */}
-                    </Col>
-            </Row>
+                    </div>
+            </div>
         </>
     );
 };
